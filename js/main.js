@@ -7,7 +7,7 @@ let letraClave = [];
 let letraJugada = [];
 let LetrasFalladas = [];
 let yaEsaLetraJugo = 'no';
-let acierto;
+let acierto = 0;
 let yerros = 0;
 
 // Inicializa el arreglo de palabras
@@ -50,90 +50,46 @@ for (let i = 0; i < numCaracteres; i++) {
 console.log(letraClave);
 
 
+
 //Detecta el código Ascii de la letra entrada
 document.addEventListener('keydown', (event) => {
   let code = event.keyCode;
   let keyValue = event.key;
   
+  
+
   if (code >= 65 && code <= 90) {
     let letra = keyValue.toUpperCase();
-     for (let i = 0; i < numCaracteres; i++) {
-      if (letra == letraClave[i] ) {
-          const insertLetra = document.createTextNode(letra);
-          const selecEspacio = document.getElementById(i);
-          selecEspacio.replaceChildren(insertLetra);
-      }
+    
 
-     }
+    for (let i = 0; i < letraJugada.length; i++) {
+      if (letraJugada[i] == letra) {
+        yaEsaLetraJugo = 'si';
+      }
+    }
+
+    letraJugada.push(letra);
+
+    if (yaEsaLetraJugo == 'si') {
+      alert('Ya probaste con esa letra');
+    }else if(yaEsaLetraJugo == 'no'){
+      for (let i = 0; i < numCaracteres; i++) {
+        if (letra == letraClave[i] ) {
+            const insertLetra = document.createTextNode(letra);
+            const selecEspacio = document.getElementById(i);
+            selecEspacio.replaceChildren(insertLetra);
+            acierto = acierto + 1;
+
+            //Está pendiente del número de aciertos
+            if (acierto == numCaracteres) {
+              alert('GANASTE');
+            };
+            
+            }
+       }
+    }
+    yaEsaLetraJugo = 'no'
+    
   }
+  
 }, false);
-
-
-
-
-/*
-for (let i = 0; i < 10; i++) {
-  if (letra == LetrasFalladas[i]) {
-    yaEsaLetraJugo = 'si';
-  }
-}
-
-if (yaEsaLetraJugo == 'no') {
-  acierto = 'no';
-  for (let i = 0; i < numCaracteres; i++) {
-    if (letra == letraClave[i]) {
-      acierto = 'si';
-      const insertLetra = document.createTextNode(letra);
-    const selecEspacio = document.getElementById(i);
-    selecEspacio.appendChild(insertLetra);
-    }
-  }
-  if (acierto == 'no') {
-    yerros = yerros + 1;
-    LetrasFalladas[yerros] = letra;
-    if (yerros == 10) {
-      alert('Perdiste')
-    }
-  }
-}
-
-
-console.log(palabraEnJuego);
-
-
-
-
-    //Revisa si la letra coincide con la palabra o no
-    for (let i = 0; i < palabraEnJuego.length; i++) {
-      
-      if (letra == palabraEnJuego[i]) {
-          const insertLetra = document.createTextNode(letra);
-          const selecEspacio = document.getElementById(i);
-          selecEspacio.appendChild(insertLetra);
-          letraJugada.push(letra);
-      }
-    }
-
-
-
-
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
